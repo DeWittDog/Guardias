@@ -7,7 +7,7 @@
     <style>
         /* Estilos básicos para el formulario y calendario */
         .calendar-container {
-            display: none;
+            display: none; /* Cambiar esto a block cuando se deba mostrar */
             margin-top: 20px;
         }
         .day {
@@ -21,10 +21,10 @@
             cursor: pointer;
         }
         .day.selected {
-            background-color: #0f0;
+            background-color: #ff0000; /* Color rojo para los días seleccionados */
         }
         .day.disabled {
-            background-color: #f00;
+            background-color: #ffcccc; /* Color rojo claro para los días deshabilitados */
             cursor: not-allowed;
         }
     </style>
@@ -35,11 +35,35 @@
     <button id="start">Iniciar</button>
     <div id="welcome-message"></div>
 
-    <div class="calendar-container">
+    <div class="calendar-container" id="calendar-container">
         <div id="calendar"></div>
         <button id="submit">Enviar</button>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        document.getElementById('start').addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            if (username) {
+                document.getElementById('welcome-message').innerText = 'Bienvenido, ' + username;
+                document.getElementById('calendar-container').style.display = 'block'; // Mostrar el calendario
+            } else {
+                alert('Por favor, ingrese su nombre.');
+            }
+        });
+
+        // Ejemplo de cómo generar el calendario
+        const calendar = document.getElementById('calendar');
+        for (let i = 1; i <= 30; i++) {
+            const day = document.createElement('div');
+            day.classList.add('day');
+            day.innerText = i;
+            day.addEventListener('click', function() {
+                if (!day.classList.contains('disabled')) {
+                    day.classList.toggle('selected');
+                }
+            });
+            calendar.appendChild(day);
+        }
+    </script>
 </body>
 </html>
